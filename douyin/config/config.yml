@@ -1,0 +1,119 @@
+# 应用服务配置
+server:
+  protocol: http
+  ip: 127.0.0.1
+  # 内网穿透代理
+  proxy: 
+  # 是否使用了代理
+  with-proxy: false
+  # 端口号
+  port: 8080
+  # 服务上下文
+  name: douyin
+# 数据库连接信息
+database:
+  # 连接url
+  dsn: "root:root@tcp(localhost:3306)/douyin?charset=utf8&parseTime=True&loc=Local"
+  # 连接池参数
+  pool:
+    # 最长空闲时间
+    connMaxIdleTime: 30000000000
+    # 最大连接数
+    maxOpenConn: 10
+    # 最大空闲连接数
+    maxIdleConn: 5
+    # 连接的生命时长
+    connMaxLifetime: 60000000000
+# 消息队列配置信息
+rabbit:
+  # 重发最大次数
+  resend-max: 5
+  # 连接url
+  url: "amqp://guest:guest@localhost:5672/"
+  # 消息超时时间
+  ttl:
+    upload-video: 10000
+    feed-video: 10000
+  # 交换机名
+  exchange:
+    service-exchange: "dy_service"
+    dead-service-exchange: "dy_service_dead"
+  # 队列名
+  queue:
+    # 关注操作
+    follow: "follow"
+    # 点赞操作
+    favorite: "favorite"
+    # 上传文件到对象存储
+    upload-video: "upload_video"
+    # 投放视频到用户feed流
+    feed-video: "feed-video"
+    # 投放视频死信队列
+    dead-feed-video: "dead-feed-video"
+    # 上传视频死信队列
+    dead-upload-video: "dead-upload-video"
+  # 路由键名
+  key:
+    # 关注
+    follow: "follow"
+    # 点赞
+    favorite: "favorite"
+    # 上传文件到对象存储
+    upload-video: "upload_video"
+    # 投放视频到用户feed流
+    feed-video: "feed-video"
+# redis配置信息
+redis:
+  # redis连接url
+  url: "127.0.0.1:6379"
+  # 数据库
+  db: 0
+  # 密码
+  password: ""
+  # redis键名
+  key:
+    # 用户token
+    token: "token:"
+    # 消息队列消息备份
+    message-backup: "message_backup"
+    # 消息队列错误消息
+    error-message: "error_message"
+    # 用户feed流收件箱
+    inbox: "inbox:"
+    # 大v发件箱
+    outbox: "outbox:"
+    # 清理用户发件箱的锁
+    clear-lock: "clearLock"
+  # 各个数据过期时间,数字+字符；如1s表示1秒
+  expire-time:
+    # 用户登录信息
+    token: "24h"
+    # 大v发件箱
+    outbox: "24h"
+    # 用户feed流收件箱
+    inbox: "24h"
+obs:
+  access-key: "VVPFQEDOWRK61JLN4RPY"
+  secret-key: "50yimoVp8qOdHa4FvPshKB1O8ZBNu4y73vOcw6XX"
+  end-point: "https://obs.cn-north-4.myhuaweicloud.com"
+  location: "cn-north-4"
+  buckets:
+    video: "dy-video"
+    cover: "dy-cover"
+thread-local:
+  keys:
+    user-id: "user_id"
+service:
+  ffmpeg-path: "D:\\software_install\\ffmpeg\\ffmpeg-4.4-full_build\\bin\\"
+  # 标识大v的粉丝数
+  big-v-num: 1000000
+  # 临时路径
+  video-temp-dir: "public/dy/video/"
+  cover-temp-dir: "public/dy/cover/"
+  # 分页大小
+  page-size: 10
+  feed-loop: true
+jwt:
+  expire-time: 86400
+  secret-key: "douyinQ"
+standard-date: "2006-01-02"
